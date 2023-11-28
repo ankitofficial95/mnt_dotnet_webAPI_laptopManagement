@@ -15,32 +15,40 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
         {
             _context = context;
         }
-        public async Task<IEnumerable<EmployeeDTO>> GetEmployees()
+        public async Task<IEnumerable<Employee>> GetEmployees()
         {
-            var employees = await _context.Employees.ToListAsync();
-            var employeeDTOs = employees.Select(employee => new EmployeeDTO
-            {
-                EmpName = employee.empname,
-                IsLaptopAssigned = employee.isLaptopAssigned
-            }).ToList();
-            return employeeDTOs;
+            var employees = await _context.Employees
+                .ToListAsync();
+
+            return employees;
         }
+
+
         public async Task<EmployeeDTO> GetEmployeeById(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            try
             {
-                return null;
+                var employee = await _context.Employees.FindAsync(id);
+                if (employee == null)
+                {
+
+                    return null;
+                }
+
+                var employeeDTO = new EmployeeDTO
+                {
+                    EmpName = employee.empname,
+                    IsLaptopAssigned = employee.isLaptopAssigned
+                };
+
+                return employeeDTO;
             }
-
-            var employeeDTO = new EmployeeDTO
+            catch (Exception ex)
             {
-                EmpName = employee.empname,
-                IsLaptopAssigned = employee.isLaptopAssigned
-            };
-
-            return employeeDTO;
+                throw new Exception("Failed to retrieve employee details.", ex);
+            }
         }
+
         public async Task<bool> UpdateEmployee(int id, EmployeeDTO employeeDTO)
         {
             var employee = await _context.Employees.FindAsync(id);
@@ -99,6 +107,8 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
         {
             return _context.Employees.Any(e => e.empId == id);
         }
+
+
     }
 }
 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("mnt_weApi_LaptopManagement_Code_First")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d01d86d17b4fd17ac506a5089269517a5dbbb3bb")]
 [assembly: System.Reflection.AssemblyProductAttribute("mnt_weApi_LaptopManagement_Code_First")]
 [assembly: System.Reflection.AssemblyTitleAttribute("mnt_weApi_LaptopManagement_Code_First")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

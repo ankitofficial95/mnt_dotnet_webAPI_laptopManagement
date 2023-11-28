@@ -20,37 +20,12 @@ namespace mnt_weApi_LaptopManagement_Code_First.Controllers
 
         // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {
-            var employeeDTOs = await _employeeService.GetEmployees();
-            return Ok(employeeDTOs);
+            var employees = await _employeeService.GetEmployees();
+            return Ok(employees);
         }
 
-        // GET: api/Employees/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<EmployeeDTO>> GetEmployee(int id)
-        {
-            var employeeDTO = await _employeeService.GetEmployeeById(id);
-            if (employeeDTO == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(employeeDTO);
-        }
-
-        // PUT: api/Employees/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, [FromBody] EmployeeDTO employeeDTO)
-        {
-            var result = await _employeeService.UpdateEmployee(id, employeeDTO);
-            if (!result)
-            {
-                return BadRequest("Failed to update employee.");
-            }
-
-            return NoContent();
-        }
         // POST: api/Employees
         [HttpPost]
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeDTO employeeDTO)
@@ -62,17 +37,50 @@ namespace mnt_weApi_LaptopManagement_Code_First.Controllers
             }
             return Ok("Employee created successfully.");
         }
-        // DELETE: api/Employees/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployee(int id)
-        {
-            var result = await _employeeService.DeleteEmployee(id);
-            if (!result)
-            {
-                return NotFound();
-            }
 
-            return NoContent();
-        }
+        //------------------------------------------------------------------------------------------------------------
+
+        //// GET: api/Employees/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<EmployeeDTO>> GetEmployee(int id)
+        //{
+        //    var employeeDTO = await _employeeService.GetEmployeeById(id);
+        //    if (employeeDTO == null)
+        //    {
+        //        return NotFound("Employee not found for the given ID.");
+        //    }
+
+        //    return Ok(employeeDTO);
+        //}
+
+        //------------------------------------------------------------------------------------------------------------
+
+        //// PUT: api/Employees/5
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutEmployee(int id, [FromBody] EmployeeDTO employeeDTO)
+        //{
+        //    var result = await _employeeService.UpdateEmployee(id, employeeDTO);
+        //    if (!result)
+        //    {
+        //        return BadRequest("Failed to update employee.");
+        //    }
+        //    return NoContent();
+        //}
+
+        //------------------------------------------------------------------------------------------------------------
+
+        //// DELETE: api/Employees/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteEmployee(int id)
+        //{
+        //    var result = await _employeeService.DeleteEmployee(id);
+        //    if (!result)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return NoContent();
+        //}
+        //------------------------------------------------------------------------------------------------------------
     }
 }

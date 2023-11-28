@@ -17,13 +17,15 @@ namespace mnt_weApi_LaptopManagement_Code_First.Controllers
         {
             _laptopService = laptopService;
         }
+
         [HttpGet]
         // GET: api/laptops
-        public async Task<ActionResult<IEnumerable<LaptopDTO>>> GetLaptops()
+        public async Task<ActionResult<IEnumerable<Laptop>>> GetLaptops()
         {
-            var laptopDtos = await _laptopService.GetLaptops();
-            return Ok(laptopDtos);
+            var laptops = await _laptopService.GetLaptops();
+            return Ok(laptops);
         }
+
         [HttpGet("id")]
         // GET: api/latops/4
         public async Task<ActionResult<LaptopDTO>> GetLaptop(int id)
@@ -38,9 +40,9 @@ namespace mnt_weApi_LaptopManagement_Code_First.Controllers
 
         // PUT: api/laptops/4
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLaptop (int id, [FromBody] LaptopDTO laptopDTO)
+        public async Task<IActionResult> PutLaptop (int id, [FromBody] LaptopPutDto laptopPutDto)
         {
-            var result = await _laptopService.UpdateLaptop(id, laptopDTO);
+            var result = await _laptopService.UpdateLaptop(id, laptopPutDto);
             if (!result)
             {
                 return BadRequest("Failed to update laptop.");
@@ -48,8 +50,8 @@ namespace mnt_weApi_LaptopManagement_Code_First.Controllers
             return Ok("laptop update done !!!");
         }
 
-        //Post : api/laptops
 
+        //Post : api/laptops
         [HttpPost]
         public async Task<IActionResult> CreateLaptop([FromBody] LaptopDTO laptopDTO)
         {

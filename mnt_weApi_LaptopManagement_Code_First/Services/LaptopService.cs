@@ -35,7 +35,10 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
                 charger = laptopDTO.charger ,
                 isAssigned = laptopDTO.isAssigned ,
                 storage = laptopDTO.storage ,
+                CreatedBy = laptopDTO.CreatedBy,
+                CreatedDate = laptopDTO.CreatedDate,
             };
+
             //change the logic 
             _context.Laptops.Add(laptop);
             //this also 
@@ -58,80 +61,43 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
             return true;
         }
 
-        public async Task<LaptopDTO> GetLaptopById(int id)
+        public async Task<Laptop> GetLaptopById(int id)
         {
-            var laptop = await  _context.Laptops.FindAsync(id);
-            if(laptop == null)
-            {
-                return null;
-            }
-            var laptopDTO = new LaptopDTO
-            {
-                serialNum = laptop.serialNum,
-                modelNum = laptop.modelNum,
-                brand = laptop.brand,
-                operatingSystem = laptop.operatingSystem,
-                ram = laptop.ram,
-                battery = laptop.battery,
-                mic = laptop.mic,
-                keyBoard = laptop.keyBoard,
-                mouse = laptop.mouse,
-                speaker = laptop.speaker,
-                charger = laptop.charger,
-                isAssigned = laptop.isAssigned,
-                storage = laptop.storage,
-            };
-
-            return laptopDTO;
+            var laptop = await _context.Laptops.FindAsync(id);
+            return laptop;
         }
 
-        public async Task<IEnumerable<LaptopDTO>> GetLaptops()
+        public async Task<IEnumerable<Laptop>> GetLaptops()
         {   //resolve
             //move this logic to repo
             var laptops = await _context.Laptops.ToListAsync();
-
-            var laptopDTOs = laptops.Select(laptop=> new LaptopDTO
-            {
-                serialNum = laptop.serialNum,
-                modelNum = laptop.modelNum,
-                brand = laptop.brand,
-                operatingSystem = laptop.operatingSystem,
-                ram = laptop.ram,
-                battery = laptop.battery,
-                mic = laptop.mic,
-                keyBoard = laptop.keyBoard,
-                mouse = laptop.mouse,
-                speaker = laptop.speaker,
-                charger = laptop.charger,
-                isAssigned = laptop.isAssigned,
-                storage = laptop.storage,
-
-            }).ToList();
-
-            return laptopDTOs;
+            return laptops;
         }
 
-        public async Task<bool> UpdateLaptop(int id, LaptopDTO laptopDTO)
+        public async Task<bool> UpdateLaptop(int id, LaptopPutDto laptopPutDto)
         {
             var laptop =await _context.Laptops.FindAsync(id);
             if (laptop == null)
             {
                 return false;
             }
-
-                laptop.serialNum = laptopDTO.serialNum;
-                laptop.modelNum = laptopDTO.modelNum; 
-                laptop.brand = laptopDTO.brand;
-                laptop.operatingSystem = laptopDTO.operatingSystem;
-                laptop.ram = laptopDTO.ram;
-                laptop.battery = laptopDTO.battery;
-                laptop.mic = laptopDTO.mic;
-                laptop.keyBoard = laptopDTO.keyBoard;
-                laptop.mouse = laptopDTO.mouse;
-                laptop.speaker = laptopDTO.speaker;
-                laptop.charger = laptopDTO.charger;
-                laptop.isAssigned = laptopDTO.isAssigned;
-                laptop.storage = laptopDTO.storage;
+                laptop.serialNum = laptopPutDto.serialNum;
+                laptop.modelNum = laptopPutDto.modelNum; 
+                laptop.brand = laptopPutDto.brand;
+                laptop.operatingSystem = laptopPutDto.operatingSystem;
+                laptop.ram = laptopPutDto.ram;
+                laptop.battery = laptopPutDto.battery;
+                laptop.mic = laptopPutDto.mic;
+                laptop.keyBoard = laptopPutDto.keyBoard;
+                laptop.mouse = laptopPutDto.mouse;
+                laptop.speaker = laptopPutDto.speaker;
+                laptop.charger = laptopPutDto.charger;
+                laptop.isAssigned = laptopPutDto.isAssigned;
+                laptop.storage = laptopPutDto.storage;
+                laptop.CreatedBy = laptopPutDto.CreatedBy;
+                laptop.CreatedDate = laptopPutDto.CreatedDate;
+                laptop.ModifiedDate = laptopPutDto.ModifiedDate;
+                laptop.ModifiedBy = laptopPutDto.ModifiedBy;          
 
             _context.Entry(laptop).State = EntityState.Modified;
 
@@ -152,85 +118,9 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
             }
             return true;
         }
-
         private bool LaptopExists(int id)
         {
             return _context.Laptops.Any(l => l.laptopId == id);
         }
-
-
-
-        //public async Task<IEnumerable<Laptop>> GetLaptops()
-        //{
-        //    return await _context.Laptops.ToListAsync();
-        //}
-        //public async Task<Laptop> GetLaptopById(int id)
-        //{
-        //    return await _context.Laptops.FindAsync(id);
-        //}
-        //public async Task<bool> DeleteLaptop(int id)
-        //{
-        //    var laptop = await _context.Laptops.FindAsync(id);
-        //    if(laptop==null)
-        //    {
-        //        return false;
-        //    }
-
-        //    _context.Laptops.Remove(laptop);
-        //    await _context.SaveChangesAsync();
-        //    return true;
-        //}
-        //public async Task<bool> UpdateLaptop(int id, Laptop laptop)
-        //{
-        //    if(id != laptop.laptopId)
-        //    {
-        //        return false;
-        //    }
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-
-        //    catch(DbUpdateConcurrencyException)
-        //    {
-        //        if (!LaptopExists(id))
-        //        {
-        //            return false;
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-        //    return true;
-        //}
-        //private bool LaptopExists(int id)
-        //{
-        //    return _context.Laptops.Any(l => l.laptopId == id);
-        //}
-        // async Task<bool> ILaptopService.CreateLaptop(LaptopDTO laptopDTO)
-        //{
-        //    var laptop = new Laptop
-        //    {
-        //        serialNum = laptopDTO.serialNum,
-        //        modelNum = laptopDTO.modelNum,
-        //        brand = laptopDTO.brand,
-        //        operatingSystem = laptopDTO.operatingSystem,
-        //        ram = laptopDTO.ram,
-        //        battery = laptopDTO.battery,
-        //        mic = laptopDTO.mic,
-        //        keyBoard = laptopDTO.keyBoard,
-        //        mouse = laptopDTO.mouse,
-        //        speaker = laptopDTO.speaker,
-        //        charger = laptopDTO.charger,
-        //        isAssigned = laptopDTO.isAssigned,
-        //        storage = laptopDTO.storage
-        //    };
-        //    _context.Laptops.Add(laptop);
-        //    await _context.SaveChangesAsync();
-        //    return false;
-        //}
-
     }
 }

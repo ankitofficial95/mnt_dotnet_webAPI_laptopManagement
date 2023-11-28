@@ -4,9 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using mnt_weApi_LaptopManagement_Code_First.Model;
+using mnt_weApi_LaptopManagement_Code_First.DTOs;
 using YourNamespace.DTOs;
 
-namespace YourNamespace.Services
+namespace mnt_weApi_LaptopManagement_Code_First.Services
 {
     public class EmployeeLaptopMappingService : IEmployeeLaptopMappingService
     {
@@ -17,46 +18,29 @@ namespace YourNamespace.Services
             _context = context;
         }
 
-        public async Task<EmployeeLaptopMappingDTO> CreateMapping(EmployeeLaptopMappingDTO mappingDTO)
+        public async Task<bool> CreateMapping(EmployeeLaptopMappingDTO mappingDTO)
         {
             try
             {
                 var mappingEntity = new EmployeeLaptopMapping
                 {
                     empId = mappingDTO.EmployeeId,
-                    laptopId = mappingDTO.LaptopId,
-                    isReturned = mappingDTO.IsReturned
+                    laptopId = mappingDTO.LaptopId
                 };
 
-          
                 _context.EmployeeLaptopMappings.Add(mappingEntity);
                 await _context.SaveChangesAsync();
 
-                // Assuming the mappingEntity is generated with the database-assigned ID
-                // You might need to adjust this based on your setup if the ID is generated differently
-                mappingDTO.MappingId = mappingEntity.MappingId;
-
-                return mappingDTO;
+                return true;
             }
             catch (Exception ex)
             {
-                // Handle exceptions or logging if needed
-                throw new Exception("Failed to create mapping.", ex);
+                return false;
             }
         }
 
 
         public Task<bool> DeleteMapping(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<EmployeeLaptopMappingDTO>> GetAllMappings()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<EmployeeLaptopMappingDTO> GetMappingById(int id)
         {
             throw new NotImplementedException();
         }

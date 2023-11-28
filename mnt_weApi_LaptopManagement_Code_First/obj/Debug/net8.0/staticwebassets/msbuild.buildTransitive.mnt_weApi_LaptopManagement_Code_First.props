@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\mnt_weApi_LaptopManagement_Code_First.props" />
+</Project>
