@@ -37,50 +37,5 @@ namespace mnt_weApi_LaptopManagement_Code_First.Controllers
             }
             return Ok("Employee created successfully.");
         }
-
-        //------------------------------------------------------------------------------------------------------------
-
-        //// GET: api/Employees/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<EmployeeDTO>> GetEmployee(int id)
-        //{
-        //    var employeeDTO = await _employeeService.GetEmployeeById(id);
-        //    if (employeeDTO == null)
-        //    {
-        //        return NotFound("Employee not found for the given ID.");
-        //    }
-
-        //    return Ok(employeeDTO);
-        //}
-
-        //------------------------------------------------------------------------------------------------------------
-
-        //// PUT: api/Employees/5
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutEmployee(int id, [FromBody] EmployeeDTO employeeDTO)
-        //{
-        //    var result = await _employeeService.UpdateEmployee(id, employeeDTO);
-        //    if (!result)
-        //    {
-        //        return BadRequest("Failed to update employee.");
-        //    }
-        //    return NoContent();
-        //}
-
-        //------------------------------------------------------------------------------------------------------------
-
-        //// DELETE: api/Employees/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteEmployee(int id)
-        //{
-        //    var result = await _employeeService.DeleteEmployee(id);
-        //    if (!result)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return NoContent();
-        //}
-        //------------------------------------------------------------------------------------------------------------
     }
 }

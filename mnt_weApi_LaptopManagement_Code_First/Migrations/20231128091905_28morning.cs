@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace mnt_weApi_LaptopManagement_Code_First.Migrations
 {
     /// <inheritdoc />
-    public partial class Update3 : Migration
+    public partial class _28morning : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Employees",
+                name: "employees",
                 columns: table => new
                 {
                     empId = table.Column<int>(type: "int", nullable: false)
@@ -22,11 +22,11 @@ namespace mnt_weApi_LaptopManagement_Code_First.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employees", x => x.empId);
+                    table.PrimaryKey("PK_employees", x => x.empId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Laptops",
+                name: "laptops",
                 columns: table => new
                 {
                     laptopId = table.Column<int>(type: "int", nullable: false)
@@ -51,95 +51,61 @@ namespace mnt_weApi_LaptopManagement_Code_First.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Laptops", x => x.laptopId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EmployeeLaptopAssignments",
-                columns: table => new
-                {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    LaptopId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeeLaptopAssignments", x => new { x.EmployeeId, x.LaptopId });
-                    table.ForeignKey(
-                        name: "FK_EmployeeLaptopAssignments_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "empId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeeLaptopAssignments_Laptops_LaptopId",
-                        column: x => x.LaptopId,
-                        principalTable: "Laptops",
-                        principalColumn: "laptopId",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_laptops", x => x.laptopId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "EmployeeLaptopMappings",
                 columns: table => new
                 {
-                    empId = table.Column<int>(type: "int", nullable: false),
+                    mappingId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     laptopId = table.Column<int>(type: "int", nullable: false),
-                    mappingId = table.Column<int>(type: "int", nullable: false),
-                    isReturned = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    empId = table.Column<int>(type: "int", nullable: false),
+                    createdDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    createdBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    modifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    modifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeLaptopMappings", x => new { x.empId, x.laptopId });
+                    table.PrimaryKey("PK_EmployeeLaptopMappings", x => x.mappingId);
                     table.ForeignKey(
-                        name: "FK_EmployeeLaptopMappings_Employees_empId",
+                        name: "FK_EmployeeLaptopMappings_employees_empId",
                         column: x => x.empId,
-                        principalTable: "Employees",
+                        principalTable: "employees",
                         principalColumn: "empId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_EmployeeLaptopMappings_Laptops_laptopId",
+                        name: "FK_EmployeeLaptopMappings_laptops_laptopId",
                         column: x => x.laptopId,
-                        principalTable: "Laptops",
+                        principalTable: "laptops",
                         principalColumn: "laptopId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeLaptopAssignments_LaptopId",
-                table: "EmployeeLaptopAssignments",
-                column: "LaptopId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeLaptopMappings_empId",
                 table: "EmployeeLaptopMappings",
-                column: "empId",
-                unique: true);
+                column: "empId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeLaptopMappings_laptopId",
                 table: "EmployeeLaptopMappings",
-                column: "laptopId",
-                unique: true);
+                column: "laptopId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EmployeeLaptopAssignments");
-
-            migrationBuilder.DropTable(
                 name: "EmployeeLaptopMappings");
 
             migrationBuilder.DropTable(
-                name: "Employees");
+                name: "employees");
 
             migrationBuilder.DropTable(
-                name: "Laptops");
+                name: "laptops");
         }
     }
 }

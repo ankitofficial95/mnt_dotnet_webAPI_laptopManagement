@@ -39,6 +39,8 @@ public class Startup
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<ILaptopService, LaptopService>();
         services.AddScoped<IEmployeeLaptopMappingService, EmployeeLaptopMappingService>();
+
+
     }
 
 

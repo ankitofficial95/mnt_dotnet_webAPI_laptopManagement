@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace mnt_weApi_LaptopManagement_Code_First.Migrations
 {
     [DbContext(typeof(mntContext))]
-    [Migration("20231127092818_Update3")]
-    partial class Update3
+    [Migration("20231128091905_28morning")]
+    partial class _28morning
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,21 +23,6 @@ namespace mnt_weApi_LaptopManagement_Code_First.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("EmployeeLaptopAssignment", b =>
-                {
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LaptopId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeeId", "LaptopId");
-
-                    b.HasIndex("LaptopId");
-
-                    b.ToTable("EmployeeLaptopAssignments");
-                });
 
             modelBuilder.Entity("mnt_weApi_LaptopManagement_Code_First.Model.Employee", b =>
                 {
@@ -55,44 +40,40 @@ namespace mnt_weApi_LaptopManagement_Code_First.Migrations
 
                     b.HasKey("empId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("employees");
                 });
 
             modelBuilder.Entity("mnt_weApi_LaptopManagement_Code_First.Model.EmployeeLaptopMapping", b =>
                 {
+                    b.Property<int>("mappingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("mappingId"));
+
+                    b.Property<string>("createdBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("createdDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("empId")
                         .HasColumnType("int");
 
                     b.Property<int>("laptopId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
+                    b.Property<string>("modifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime>("modifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("mappingId");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
+                    b.HasIndex("empId");
 
-                    b.Property<bool>("isReturned")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("mappingId")
-                        .HasColumnType("int");
-
-                    b.HasKey("empId", "laptopId");
-
-                    b.HasIndex("empId")
-                        .IsUnique();
-
-                    b.HasIndex("laptopId")
-                        .IsUnique();
+                    b.HasIndex("laptopId");
 
                     b.ToTable("EmployeeLaptopMappings");
                 });
@@ -158,59 +139,31 @@ namespace mnt_weApi_LaptopManagement_Code_First.Migrations
 
                     b.HasKey("laptopId");
 
-                    b.ToTable("Laptops");
-                });
-
-            modelBuilder.Entity("EmployeeLaptopAssignment", b =>
-                {
-                    b.HasOne("mnt_weApi_LaptopManagement_Code_First.Model.Employee", "Employee")
-                        .WithMany("EmployeeLaptopAssignments")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("mnt_weApi_LaptopManagement_Code_First.Model.Laptop", "Laptop")
-                        .WithMany("EmployeeLaptopAssignments")
-                        .HasForeignKey("LaptopId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Laptop");
+                    b.ToTable("laptops");
                 });
 
             modelBuilder.Entity("mnt_weApi_LaptopManagement_Code_First.Model.EmployeeLaptopMapping", b =>
                 {
-                    b.HasOne("mnt_weApi_LaptopManagement_Code_First.Model.Employee", "Employee")
-                        .WithOne("EmployeeLaptopMapping")
-                        .HasForeignKey("mnt_weApi_LaptopManagement_Code_First.Model.EmployeeLaptopMapping", "empId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("mnt_weApi_LaptopManagement_Code_First.Model.Employee", "employee")
+                        .WithMany("employeeLaptopMappings")
+                        .HasForeignKey("empId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("mnt_weApi_LaptopManagement_Code_First.Model.Laptop", "Laptop")
-                        .WithOne("EmployeeLaptopMapping")
-                        .HasForeignKey("mnt_weApi_LaptopManagement_Code_First.Model.EmployeeLaptopMapping", "laptopId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("mnt_weApi_LaptopManagement_Code_First.Model.Laptop", "laptop")
+                        .WithMany()
+                        .HasForeignKey("laptopId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Employee");
+                    b.Navigation("employee");
 
-                    b.Navigation("Laptop");
+                    b.Navigation("laptop");
                 });
 
             modelBuilder.Entity("mnt_weApi_LaptopManagement_Code_First.Model.Employee", b =>
                 {
-                    b.Navigation("EmployeeLaptopAssignments");
-
-                    b.Navigation("EmployeeLaptopMapping");
-                });
-
-            modelBuilder.Entity("mnt_weApi_LaptopManagement_Code_First.Model.Laptop", b =>
-                {
-                    b.Navigation("EmployeeLaptopAssignments");
-
-                    b.Navigation("EmployeeLaptopMapping");
+                    b.Navigation("employeeLaptopMappings");
                 });
 #pragma warning restore 612, 618
         }

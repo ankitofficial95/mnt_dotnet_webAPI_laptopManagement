@@ -17,7 +17,7 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
         }
         public async Task<IEnumerable<Employee>> GetEmployees()
         {
-            var employees = await _context.Employees
+            var employees = await _context.employees
                 .ToListAsync();
 
             return employees;
@@ -28,7 +28,7 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
         {
             try
             {
-                var employee = await _context.Employees.FindAsync(id);
+                var employee = await _context.employees.FindAsync(id);
                 if (employee == null)
                 {
 
@@ -51,7 +51,7 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
 
         public async Task<bool> UpdateEmployee(int id, EmployeeDTO employeeDTO)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            var employee = await _context.employees.FindAsync(id);
             if (employee == null)
             {
                 return false;
@@ -86,26 +86,26 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
                 isLaptopAssigned = employeeDTO.IsLaptopAssigned
             };
 
-            _context.Employees.Add(employee);
+            _context.employees.Add(employee);
             await _context.SaveChangesAsync();
             return true;
         }
         public async Task<bool> DeleteEmployee(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            var employee = await _context.employees.FindAsync(id);
             if (employee == null)
             {
                 return false;
             }
 
-            _context.Employees.Remove(employee);
+            _context.employees.Remove(employee);
             await _context.SaveChangesAsync();
 
             return true;
         }
         private bool EmployeeExists(int id)
         {
-            return _context.Employees.Any(e => e.empId == id);
+            return _context.employees.Any(e => e.empId == id);
         }
 
 

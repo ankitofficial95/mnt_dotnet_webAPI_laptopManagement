@@ -40,7 +40,7 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
             };
 
             //change the logic 
-            _context.Laptops.Add(laptop);
+            _context.laptops.Add(laptop);
             //this also 
             await _context.SaveChangesAsync();
 
@@ -51,32 +51,32 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
         }
         public async Task<bool> DeleteLaptop(int id)
         {
-            var laptop = await _context.Laptops.FindAsync(id);
+            var laptop = await _context.laptops.FindAsync(id);
             if (laptop == null)
             {
                 return false;
             }
-            _context.Laptops.Remove(laptop);
+            _context.laptops.Remove(laptop);
             await _context.SaveChangesAsync();
             return true;
         }
 
         public async Task<Laptop> GetLaptopById(int id)
         {
-            var laptop = await _context.Laptops.FindAsync(id);
+            var laptop = await _context.laptops.FindAsync(id);
             return laptop;
         }
 
         public async Task<IEnumerable<Laptop>> GetLaptops()
         {   //resolve
             //move this logic to repo
-            var laptops = await _context.Laptops.ToListAsync();
+            var laptops = await _context.laptops.ToListAsync();
             return laptops;
         }
 
         public async Task<bool> UpdateLaptop(int id, LaptopPutDto laptopPutDto)
         {
-            var laptop =await _context.Laptops.FindAsync(id);
+            var laptop =await _context.laptops.FindAsync(id);
             if (laptop == null)
             {
                 return false;
@@ -120,7 +120,7 @@ namespace mnt_weApi_LaptopManagement_Code_First.Services
         }
         private bool LaptopExists(int id)
         {
-            return _context.Laptops.Any(l => l.laptopId == id);
+            return _context.laptops.Any(l => l.laptopId == id);
         }
     }
 }

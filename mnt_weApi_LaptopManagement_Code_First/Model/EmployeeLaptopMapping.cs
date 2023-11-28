@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace mnt_weApi_LaptopManagement_Code_First.Model
 {
@@ -7,18 +7,21 @@ namespace mnt_weApi_LaptopManagement_Code_First.Model
     {
         [Key]
         public int mappingId { get; set; }
-        public int empId { get; set; }
-        public int laptopId { get; set; }
-        public bool isReturned { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime ModifiedDate { get; set; }
-        public string ModifiedBy { get; set; }
 
-        [ForeignKey("empId")]
-        public Employee? Employee { get; set; }
+        public int laptopId { get; set; }
+
 
         [ForeignKey("laptopId")]
-        public Laptop? Laptop { get; set; }  
+        public Laptop laptop { get; set; }
+
+        public int empId { get; set; }
+        [ForeignKey("empId")]
+
+
+        public Employee? employee { get; set; }
+        public DateTime? createdDate { get; set; }
+        public string? createdBy { get; set; }
+        public DateTime modifiedDate { get; set; }
+        public string? modifiedBy { get; set; }
     }
 }

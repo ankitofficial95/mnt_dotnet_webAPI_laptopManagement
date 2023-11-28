@@ -7,30 +7,25 @@ public class mntContext : DbContext
     {
     }
 
-    public virtual DbSet<Employee> Employees { get; set; }
-    public virtual DbSet<Laptop> Laptops { get; set; }
+    public virtual DbSet<Employee> employees { get; set; }
+    public virtual DbSet<Laptop> laptops { get; set; }
     public virtual DbSet<EmployeeLaptopMapping> EmployeeLaptopMappings { get; set; }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Employee>()
-            .HasKey(e => e.empId);
-
-        modelBuilder.Entity<Laptop>()
-            .HasKey(l => l.laptopId);
-
         modelBuilder.Entity<EmployeeLaptopMapping>()
             .HasKey(el => el.mappingId);
 
         modelBuilder.Entity<EmployeeLaptopMapping>()
-            .HasOne(el => el.Employee)
-            .WithMany(e => e.EmployeeLaptopMappings)
-            .HasForeignKey(el => el.empId);
-
+            .HasOne(el => el.employee)
+            .WithMany(e => e.employeeLaptopMappings)
+            .HasForeignKey(el => el.empId)
+            .OnDelete(DeleteBehavior.Restrict); 
         modelBuilder.Entity<EmployeeLaptopMapping>()
-            .HasOne(el => el.Laptop)
-            .WithMany()
-            .HasForeignKey(el => el.laptopId);
+            .HasOne(el => el.laptop)
+            .WithMany() 
+            .HasForeignKey(el => el.laptopId)
+            .OnDelete(DeleteBehavior.Restrict); 
+
     }
 }

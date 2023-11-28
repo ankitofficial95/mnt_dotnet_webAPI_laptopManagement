@@ -23,6 +23,5 @@ namespace mnt_weApi_LaptopManagement_Code_First.Model
         public string? CreatedBy { get; set; }
         public DateTime ModifiedDate { get; set; }
         public string? ModifiedBy { get; set; }
-        public EmployeeLaptopMapping? EmployeeLaptopMapping { get; set; }
     }
 }
